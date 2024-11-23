@@ -2,9 +2,14 @@
 #include "MacUILib.h"
 #include "objPos.h"
 
+#include "Player.h"
+
 using namespace std;
 
 #define DELAY_CONST 100000
+
+Player *myPlayer; // global pointer meant to instantiate a player object on the heap
+GameMechs *myGM;
 
 bool exitFlag;
 
@@ -22,7 +27,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(myGM -> getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -39,6 +44,12 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
+    // placed object in heap, go delete it in cleanup
+    
+    
+
+    myGM = new GameMechs();
+    myPlayer = new Player(myGM); // nullptr is a placeholder
 
     exitFlag = false;
 }
@@ -55,7 +66,11 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();
+
+    objPos playerPos = myPlayer -> getPlayerPos();
+
+    MacUILib_printf("Player [x,y,sym] = [%d,%d,%c]\n", playerPos.pos->x, playerPos.pos->y,playerPos.symbol);    
 }
 
 void LoopDelay(void)
@@ -66,7 +81,10 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();  
+
+    delete myPlayer;  
+    delete myGM;
 
     MacUILib_uninit();
 }
