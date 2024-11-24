@@ -5,11 +5,14 @@ Course Project
 You must watch the briefing video and read through the manual to engage in the development activities.
 
 
-Section: [Insert your lab section]
+Class Section: [C02]
 
 Team Information
-Member 1 MacID: [noushadw]
-Member 1 StudentID: [400519903]
+Member 1 MacID: [shahiz8]
+Member 1 StudentID: [400526613]
+Section: [L03]
 
-Member 2 MacID: [Insert your macID here]
-Member 2 StudentID: [Insert your numerical student ID here]
+Member 2 MacID: [noushadw]
+Member 2 StudentID: [400519903]
+Section: [L06]
+

@@ -28,10 +28,10 @@ class Player
 
     private:
         objPos playerPos; // Upgrade this in iteration 3.       
-        enum Dir myDir;
+        enum Dir playerDir;//does this have to be named as myDir?
 
         // Need a reference to the Main Game Mechanisms
-        GameMechs* mainGameMechsRef;
+        GameMechs* mainGameMechsRef; //should this just be gameMechRef?
 };
 
 #endif
