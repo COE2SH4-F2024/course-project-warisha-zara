@@ -29,5 +29,4 @@ class objPos
         
         bool isPosEqual(const objPos* refPos) const;
 };
-
 #endif
