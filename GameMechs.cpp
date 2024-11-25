@@ -7,14 +7,6 @@ GameMechs::GameMechs()
     exitFlag = false;
     loseFlag = false;
     score = 0;
-    // speed = 0;
-    // speedLevel[0] = 500000;
-    // speedLevel[1] = 350000;
-    // speedLevel[2] = 200000;
-    // speedLevel[3] = 100000;
-    // speedLevel[4] = 10000;
-    // //speedLevel[4] = {500000, 350000, 200000, 100000, 10000};
-    // delay = speedLevel[speed];
 
     boardSizeX = 10; //15
     boardSizeY = 20; //30
@@ -100,20 +92,3 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
-// void GameMechs::incrementSpeed() {
-//     if (speed < 4) {
-//         speed++;
-//         delay = speedLevel[speed];
-//     }
-// }
-
-// void GameMechs::decrementSpeed() {
-//     if (speed > 0) {
-//         speed--;
-//         delay = speedLevel[speed];
-//     }
-// }
-
-// int GameMechs::getSpeed() const {
-//     return speed;
-// }
