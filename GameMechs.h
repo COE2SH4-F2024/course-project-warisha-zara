@@ -16,6 +16,10 @@ class GameMechs
         bool exitFlag;
         bool loseFlag;
         int score;
+        // int speed;
+        // double delay;
+        // double speedLevel[5];
+
 
         int boardSizeX;
         int boardSizeY;
@@ -43,6 +47,10 @@ class GameMechs
         void incrementScore();
         
         // More methods should be added here
+        // void incrementSpeed();
+        // void decrementSpeed();
+        // int getSpeed() const;
+
 };
 
 #endif

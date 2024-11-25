@@ -3,8 +3,8 @@
 #include "objPos.h"
 
 #include "Player.h"
+#include "GameMechs.h"
 
-//#include "GameMechs.h"
 using namespace std;
 
 #define DELAY_CONST 100000
@@ -55,12 +55,20 @@ void Initialize(void)
 
 void GetInput(void)
 {
-   
+   char userInput = myGM-> getInput();
+   if (userInput == ' '){
+        myGM->setExitTrue();
+   }
 }
 
 void RunLogic(void)
 {
-    
+    myPlayer->updatePlayerDir();
+    myPlayer->movePlayer();
+    // if (myPlayer->getPlayerPos().pos->x == 0) {
+    //     myGM->setLoseFlag();
+    //     myGM->setExitTrue();
+    // }
 }
 
 void DrawScreen(void)
@@ -71,7 +79,7 @@ void DrawScreen(void)
     //  1. clear the current screen contents
     //WILL NEED TP IMPLEMENT YOUR COPY ASSIGNMENT OPERATOR
     //TO MAKE THIS LINE WORK
-    MacUILib_clearScreen();
+    //MacUILib_clearScreen();
     //  2. Iterate through each character location on the game board
     //     using the nested for-loop row-scanning setup.
     int i; //==y

@@ -43,51 +43,51 @@ void Player::updatePlayerDir()
  
 
     switch(input) 
-        {                      
-            // case ' ':  // exit
-            //     exitFlag = 1;
-            //     break;
-            // case '+':
-            //     if (gameSpeed < 5){
-            //         gameSpeed ++;
-            //         delayTime -=40000;
-            //     }
-            //     //input =0;
-            //     break;
-            // case '-':
-            //     if (gameSpeed > 1){
-            //         gameSpeed --;
-            //         delayTime +=40000;
-            //     }
-            //     //input =0;
-            //     break;
-            case 'W':
-            case 'w':
-                if ((playerDir == LEFT || playerDir == RIGHT || playerDir == STOP)){
-                    playerDir = UP;
-                }
-                break;
-            case 'S':
-            case 's':
-                if ((playerDir == LEFT || playerDir == RIGHT || playerDir == STOP)){
-                    playerDir = DOWN;
-                }
-                break;
-            case 'D':
-            case 'd':
-                if ((playerDir == UP || playerDir == DOWN || playerDir == STOP)){
-                    playerDir = RIGHT;
-                }
-                break;
-            case 'A':
-            case 'a':
-                if ((playerDir == UP || playerDir == DOWN || playerDir == STOP)){
-                    playerDir = LEFT;
-                }
-                break;
-            default:
-                break;
-        }
+    {                      
+        // case ' ':  // exit
+        //     exitFlag = 1;
+        //     break;
+        // case '+':
+        //     if (gameSpeed < 5){
+        //         gameSpeed ++;
+        //         delayTime -=40000;
+        //     }
+        //     //input =0;
+        //     break;
+        // case '-':
+        //     if (gameSpeed > 1){
+        //         gameSpeed --;
+        //         delayTime +=40000;
+        //     }
+        //     //input =0;
+        //     break;
+        case 'W':
+        case 'w':
+            if ((playerDir == LEFT || playerDir == RIGHT || playerDir == STOP)){
+                playerDir = UP;
+            }
+            break;
+        case 'S':
+        case 's':
+            if ((playerDir == LEFT || playerDir == RIGHT || playerDir == STOP)){
+                playerDir = DOWN;
+            }
+            break;
+        case 'D':
+        case 'd':
+            if ((playerDir == UP || playerDir == DOWN || playerDir == STOP)){
+                playerDir = RIGHT;
+            }
+            break;
+        case 'A':
+        case 'a':
+            if ((playerDir == UP || playerDir == DOWN || playerDir == STOP)){
+                playerDir = LEFT;
+            }
+            break;
+        default:
+            break;
+    }
 
 
     // if(input != 0)  // if not null character
@@ -144,7 +144,7 @@ void Player::movePlayer()
         case UP:
             playerPos.pos->x = playerPos.pos->x - 1;
             if (playerPos.pos->x < 1){
-                playerPos.pos->x = 8;
+                //playerPos.pos->x = 8;
                 playerPos.pos->x = mainGameMechsRef -> getBoardSizeX() -2;
             }
             break;
