@@ -55,10 +55,11 @@ void Initialize(void)
 
 void GetInput(void)
 {
-   char userInput = myGM-> getInput();
-   if (userInput == ' '){
-        myGM->setExitTrue();
-   }
+//    char userInput = myGM-> getInput();
+//    if (userInput == ' '){
+//         myGM->setExitTrue();
+//    }
+    myGM-> collectAsyncInput();
 }
 
 void RunLogic(void)

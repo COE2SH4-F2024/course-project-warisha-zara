@@ -33,7 +33,7 @@ class GameMechs
         bool getLoseFlagStatus() const;
         void setLoseFlag();
 
-        char getInput();
+        char getInput()const;
         void setInput(char this_input);
         void clearInput();
 
@@ -46,7 +46,7 @@ class GameMechs
         // More methods should be added here
         void generateFood(int boardWidth, int boardHeight, objPosArrayList* blockOff);
         objPos getFoodPos() const;
-
+        void collectAsyncInput();
 };
 
 #endif
