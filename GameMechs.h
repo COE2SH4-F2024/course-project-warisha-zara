@@ -16,9 +16,6 @@ class GameMechs
         bool exitFlag;
         bool loseFlag;
         int score;
-        // int speed;
-        // double delay;
-        // double speedLevel[5];
 
 
         int boardSizeX;
@@ -47,7 +44,8 @@ class GameMechs
         void incrementScore();
         
         // More methods should be added here
-        
+        void generateFood(int boardWidth, int boardHeight, objPosArrayList* blockOff);
+        objPos getFoodPos() const;
 
 };
 

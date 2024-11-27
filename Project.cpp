@@ -76,6 +76,7 @@ void DrawScreen(void)
     MacUILib_clearScreen();
 
     objPos playerPos = myPlayer -> getPlayerPos();
+    objPos foodPos = myGM->getFoodPos();
     //  1. clear the current screen contents
     //WILL NEED TP IMPLEMENT YOUR COPY ASSIGNMENT OPERATOR
     //TO MAKE THIS LINE WORK
@@ -96,6 +97,10 @@ void DrawScreen(void)
             else if (i == playerPos.pos->x && j == playerPos.pos->y){
                 //board[i][j]= playerPos.symbol;
                 MacUILib_printf("%c", playerPos.symbol);
+            }
+            else if (i == foodPos.pos->x && j == foodPos.pos->y){
+                //board[i][j]= playerPos.symbol;
+                MacUILib_printf("%c", foodPos.symbol);
             }
             else {
                 MacUILib_printf(" ");
