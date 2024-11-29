@@ -11,7 +11,7 @@ GameMechs::GameMechs()
     boardSizeX = 10; //15
     boardSizeY = 20; //30
 
-    food.setObjPos(-10, -10, 'o');
+    food.setObjPos(5, 5, 'o');
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -102,7 +102,7 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
-void GameMechs::generateFood(int boardWidth, int boardHeight, objPosArrayList* blockOff)
+void GameMechs::generateFood(objPos blockOff)
 {
     //only need to block off the player pos for now
     // ppa3 generate Items code
@@ -117,40 +117,36 @@ void GameMechs::generateFood(int boardWidth, int boardHeight, objPosArrayList* b
     // xRandList[playerPos->x]++;
     // yRandList[playerPos->y]++; 
 
-    // bool isValid = false;
-    // while (!isValid) {
-    //     int x = rand() % 10; 
-    //     int y = rand() % 20;  
-    //     food.setObjPos(x, y, '*');
-    //     isValid = true;
-    //     for (int i = 0; i < snakeBody->getSize(); ++i) {
-    //         if (snakeBody->getElement(i).isPosEqual(&food)) {
-    //             isValid = false;
+         
+    //     // Check against snake's body
+    //     for (int i = 0; i < size; i++) {
+    //         objPos snake = blockOff->getElement(i);
+    //         if (snake.pos->x == x && snake.pos->y == y) {
+    //             unique = 0; // Not unique
     //             break;
     //         }
     //     }
-    // }
 
-    srand(time(NULL)); 
-    int foodX,foodY; 
-    bool validPosition = false;
-    while (!validPosition)
-    {
-        foodX = rand() % (boardSizeX - 2) + 1; 
-        foodY = rand() % (boardSizeY - 2) + 1;
-        validPosition = true; 
 
-        for (int i = 0; i < blockOff->getSize(); ++i)
-        {
-            objPos currentSegment = blockOff->getElement(i);
-            if (foodX == currentSegment.getObjPos().pos->x && foodY == currentSegment.getObjPos().pos->y)
-            {
-                validPosition = false; 
-                break;
-            }
-        }
+
+    //srand(time(NULL));
+    bool unique = false;
+    //static bool unique = false;
+    if (!unique) {
+        srand((time(nullptr)));
+        unique = true;
     }
-    food.setObjPos(foodX,foodY,'*');
+
+    int foodX, foodY;
+    bool validPosition;
+
+    do {
+        foodX = rand() % boardSizeX; // or x = rand() % (boardSizeX - 3) + 1; (?)
+        foodY = rand() % boardSizeY; //y = rand() % (boardSizeY - 3) + 1;
+        validPosition = !(foodX == blockOff.pos->x && foodY == blockOff.pos->y);
+    } while (!validPosition);
+
+    food.setObjPos(foodX, foodY, 'o');
 }
 
 objPos GameMechs::getFoodPos() const

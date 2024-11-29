@@ -4,7 +4,8 @@
 Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
-    playerDir = STOP;
+    playerDir = STOP; // myDir in instructions i think
+    //snakeBody = new objPosArrayList;
 
     // more actions to be included
 

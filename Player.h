@@ -25,6 +25,7 @@ class Player
         void movePlayer();
 
         // More methods to be added here
+        //objPosArrayList* snakeBody;
 
     private:
         objPos playerPos; // Upgrade this in iteration 3.       

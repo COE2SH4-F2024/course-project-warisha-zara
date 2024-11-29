@@ -49,6 +49,7 @@ void Initialize(void)
 
     myGM = new GameMechs();
     myPlayer = new Player(myGM); // nullptr is a placeholder
+    //myGM->generateFood(myPlayer->getPlayerPos());
     //char Gameboard[30][15];
     //exitFlag = false;
 }
@@ -66,10 +67,15 @@ void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
-    // if (myPlayer->getPlayerPos().pos->x == 0) {
-    //     myGM->setLoseFlag();
-    //     myGM->setExitTrue();
-    // }
+    
+    objPos playerHead = myPlayer->getPlayerPos();
+    objPos foodPos = myGM->getFoodPos(); // Check for food consumption
+    
+    
+    if (playerHead.pos->x == foodPos.pos->x && playerHead.pos->y == foodPos.pos->y) {
+        myGM->incrementScore(); 
+        myGM->generateFood(playerHead); 
+    }
 }
 
 void DrawScreen(void)
@@ -78,6 +84,9 @@ void DrawScreen(void)
 
     objPos playerPos = myPlayer -> getPlayerPos();
     objPos foodPos = myGM->getFoodPos();
+    
+    
+    
     //  1. clear the current screen contents
     //WILL NEED TP IMPLEMENT YOUR COPY ASSIGNMENT OPERATOR
     //TO MAKE THIS LINE WORK
@@ -99,9 +108,8 @@ void DrawScreen(void)
                 //board[i][j]= playerPos.symbol;
                 MacUILib_printf("%c", playerPos.symbol);
             }
-            else if (i == foodPos.pos->x && j == foodPos.pos->y){
-                //board[i][j]= playerPos.symbol;
-                MacUILib_printf("%c", foodPos.symbol);
+            else if (i == foodPos.pos->x && j == foodPos.pos->y) {
+                MacUILib_printf("%c", foodPos.symbol); // display the food
             }
             else {
                 MacUILib_printf(" ");
