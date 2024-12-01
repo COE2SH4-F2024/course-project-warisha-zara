@@ -68,13 +68,17 @@ void RunLogic(void)
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
     
-    objPos playerHead = myPlayer->getPlayerPos();
+    objPosArrayList* snakeBody = myPlayer->getPlayerPosList();
+    objPos playerHead = snakeBody->getHeadElement();
+    //objPos playerHead = myPlayer->getPlayerPos();
     objPos foodPos = myGM->getFoodPos(); // Check for food consumption
     
-    
+    //use to check is snake eats food
     if (playerHead.pos->x == foodPos.pos->x && playerHead.pos->y == foodPos.pos->y) {
         myGM->incrementScore(); 
-        myGM->generateFood(playerHead); 
+        myGM->generateFood(playerHead); // generate food randomly
+        // increase snake length
+        snakeBody->insertHead(playerHead); // update head
     }
 }
 
@@ -82,7 +86,8 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();
 
-    objPos playerPos = myPlayer -> getPlayerPos();
+    objPosArrayList* snakeBody = myPlayer->getPlayerPosList(); 
+    //objPos playerPos = myPlayer -> getPlayerPos();
     objPos foodPos = myGM->getFoodPos();
     
     
@@ -104,35 +109,47 @@ void DrawScreen(void)
                 // MacUILib_printf("%c", board[i][j]);
                 MacUILib_printf("#"); // Border symbol
             }
-            else if (i == playerPos.pos->x && j == playerPos.pos->y){
-                //board[i][j]= playerPos.symbol;
-                MacUILib_printf("%c", playerPos.symbol);
-            }
-            else if (i == foodPos.pos->x && j == foodPos.pos->y) {
-                MacUILib_printf("%c", foodPos.symbol); // display the food
-            }
-            else {
-                MacUILib_printf(" ");
-            }
-            // else {
-            //     //empty space being printed
-            //     //int isItem =0;
-            //     board[i][j] = ' ';
-            //     for (k=0; k < ITEM_BIN_SIZE; k++){
-            //         if(i == itemBin[k].x && j == itemBin[k].y){
-            //             board[i][j] = itemBin[k].symbol;
-            //             //isItem =1;
-            //             break;
-            //         }
-            //     }                
-            //     MacUILib_printf("%c", board[i][j]);
-
+            // else if (i == playerPos.pos->x && j == playerPos.pos->y){
+            //     //board[i][j]= playerPos.symbol;
+            //     MacUILib_printf("%c", playerPos.symbol);
             // }
+            // else if (i == foodPos.pos->x && j == foodPos.pos->y) {
+            //     MacUILib_printf("%c", foodPos.symbol); // display the food
+            // }
+            // else {
+            //     MacUILib_printf(" ");
+            // }
+            else {
+                bool isSnake = false;
+                for (int k = 0; k < snakeBody->getSize(); k++) {
+                    objPos segment = snakeBody->getElement(k);
+                    if (i == segment.pos->x && j == segment.pos->y) {
+                        MacUILib_printf("%c", segment.symbol); // display snake 
+                        isSnake = true;
+                        break;
+                    }
+                }
+                if (!isSnake) {
+                    if (i == foodPos.pos->x && j == foodPos.pos->y) {
+                        MacUILib_printf("%c", foodPos.symbol); // display food
+                    } else {
+                        MacUILib_printf(" "); 
+                    }
+                }
+            }
         }
         MacUILib_printf("\n");
     }
-    MacUILib_printf("\n"); //Move to next line after printed each row
-    MacUILib_printf("Player [x,y,sym] = [%d,%d,%c]\n", playerPos.pos->x, playerPos.pos->y,playerPos.symbol);    
+    MacUILib_printf("\n"); // Move to the next line after each row
+    MacUILib_printf("Score: %d\n", myGM->getScore());
+    //MacUILib_printf("Player [x,y,sym] = [%d,%d,%c]\n", playerPos.pos->x, playerPos.pos->y,playerPos.symbol);  
+    MacUILib_printf("Food [x,y,sym] = [%d,%d,%c]\n", foodPos.pos->x, foodPos.pos->y, foodPos.symbol); 
+
+    //     }
+    //     MacUILib_printf("\n");
+    // }
+    // MacUILib_printf("\n"); //Move to next line after printed each row
+    // MacUILib_printf("Player [x,y,sym] = [%d,%d,%c]\n", playerPos.pos->x, playerPos.pos->y,playerPos.symbol);    
 }
 
 void LoopDelay(void)

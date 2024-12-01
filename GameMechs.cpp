@@ -141,8 +141,8 @@ void GameMechs::generateFood(objPos blockOff)
     bool validPosition;
 
     do {
-        foodX = rand() % boardSizeX; // or x = rand() % (boardSizeX - 3) + 1; (?)
-        foodY = rand() % boardSizeY; //y = rand() % (boardSizeY - 3) + 1;
+        foodX = rand() % (boardSizeX - 3) + 1;
+        foodY = rand() % (boardSizeY - 3) + 1;
         validPosition = !(foodX == blockOff.pos->x && foodY == blockOff.pos->y);
     } while (!validPosition);
 

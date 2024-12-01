@@ -20,7 +20,8 @@ class Player
         Player(GameMechs* thisGMRef);
         ~Player();
 
-        objPos getPlayerPos() const; // Upgrade this in iteration 3.       
+        objPosArrayList* getPlayerPosList() const;
+        //objPos getPlayerPos() const; // Upgrade this in iteration 3.       
         void updatePlayerDir();
         void movePlayer();
 
@@ -28,7 +29,8 @@ class Player
         //objPosArrayList* snakeBody;
 
     private:
-        objPos playerPos; // Upgrade this in iteration 3.       
+        objPosArrayList* playerPosList;
+        //objPos playerPos; // Upgrade this in iteration 3.       
         enum Dir playerDir;//does this have to be named as myDir?
 
         // Need a reference to the Main Game Mechanisms
