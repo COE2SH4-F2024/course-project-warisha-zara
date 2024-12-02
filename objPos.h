@@ -1,6 +1,6 @@
 #ifndef OBJPOS_H
 #define OBJPOS_H
-#include "MacUILib.h" // add
+#include "MacUILib.h" // added
 #include <iostream>
 // Not really a C++ thing
 typedef struct 
@@ -23,9 +23,6 @@ class objPos
         ~objPos(); // destructor
         objPos(const objPos& other); // copy constructor
         objPos& operator=(const objPos& other); // copy assignment operator
-        // objPos(objPos&& other) noexcept; // move constructor
-        // objPos& operator=(objPos&& other) noexcept; // move assignment operator
-
 
         void setObjPos(objPos o);        
         void setObjPos(int xPos, int yPos, char sym);  

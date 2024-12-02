@@ -20,8 +20,7 @@ class Player
         Player(GameMechs* thisGMRef);
         ~Player();
 
-        objPosArrayList* getPlayerPosList() const;
-        //objPos getPlayerPos() const; // Upgrade this in iteration 3.       
+        objPosArrayList* getPlayerPosList() const; //originally objPos getPlayerPos() const; but updated for snakeBody in I3       
         void updatePlayerDir();
         void movePlayer();
 
@@ -31,12 +30,10 @@ class Player
         void increasePlayerLength();
 
     private:
-        objPosArrayList* playerPosList;
-        //objPos playerPos; // Upgrade this in iteration 3.       
+        objPosArrayList* playerPosList; //orignially objPos playerPos; but updated for snakeBody in I3       
         enum Dir playerDir;//does this have to be named as myDir?
-
         // Need a reference to the Main Game Mechanisms
-        GameMechs* mainGameMechsRef; //should this just be gameMechRef?
+        GameMechs* mainGameMechsRef; 
 };
 
 #endif

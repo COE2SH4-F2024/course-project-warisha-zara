@@ -67,7 +67,7 @@ int GameMechs::getScore() const
 
 void GameMechs::incrementScore()
 {
-    ++score;
+    ++score; // add one to score
 }
 
 int GameMechs::getBoardSizeX() const
@@ -83,7 +83,7 @@ int GameMechs::getBoardSizeY() const
 
 void GameMechs::setExitTrue()
 {
-    exitFlag = true;
+    exitFlag = true; //set exitFlag to true
 }
 
 void GameMechs::setLoseFlag()
@@ -104,34 +104,11 @@ void GameMechs::clearInput()
 // More methods should be added here
 void GameMechs::generateFood(objPos blockOff)
 {
-    //only need to block off the player pos for now
-    // ppa3 generate Items code
-    // int count = listSize;
-    // int randNum;
-    // int str_size = my_strlen(str);
-    // // This is called "Bit-Vector" method of generating non-re
-    // // so not to generate items right over the player
-    // int* xRandList = (int*) calloc(xRange, sizeof(int));
-    // int* yRandList = (int*) calloc(yRange, sizeof(int));
-    // int* charRandList = (int*) calloc(str_size, sizeof(int));
-    // xRandList[playerPos->x]++;
-    // yRandList[playerPos->y]++; 
-
-         
-    //     // Check against snake's body
-    //     for (int i = 0; i < size; i++) {
-    //         objPos snake = blockOff->getElement(i);
-    //         if (snake.pos->x == x && snake.pos->y == y) {
-    //             unique = 0; // Not unique
-    //             break;
-    //         }
-    //     }
-
-
+    // similar to ppa3 generate Items code
 
     //srand(time(NULL));
-    bool unique = false;
     //static bool unique = false;
+    bool unique = false;
     if (!unique) {
         srand((time(nullptr)));
         unique = true;
