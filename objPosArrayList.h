@@ -21,6 +21,8 @@ class objPosArrayList
         void insertTail(objPos thisPos);
         void removeHead();
         void removeTail();
+        void removeTail(int reduce);
+
         
         objPos getHeadElement() const;
         objPos getTailElement() const;

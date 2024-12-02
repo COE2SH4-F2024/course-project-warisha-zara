@@ -62,6 +62,12 @@ void objPosArrayList::removeTail()
         listSize --;
     }   
 }
+void objPosArrayList::removeTail(int reduce)
+{
+    if (listSize >= 6){
+        listSize = listSize - reduce;
+    } 
+}
 
 objPos objPosArrayList::getHeadElement() const
 {

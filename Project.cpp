@@ -4,15 +4,16 @@
 
 #include "Player.h"
 #include "GameMechs.h"
+#include "Food.h"
 
 using namespace std;
 
 #define DELAY_CONST 100000
 
 Player *myPlayer; // global pointer meant to instantiate a player object on the heap
-GameMechs *myGM;
+GameMechs *myGM; // global pointer meant to instantiate a gamemechs object on the heap
+Food *myFood; // global pointer meant to instantiate a food object on the heap
 
-//bool exitFlag;
 
 void Initialize(void);
 void GetInput(void);
@@ -48,7 +49,8 @@ void Initialize(void)
     // placed object in heap, go delete it in cleanup
 
     myGM = new GameMechs();
-    myPlayer = new Player(myGM);
+    myPlayer = new Player(myGM); 
+    myFood = new Food();
 }
 
 void GetInput(void)
@@ -61,66 +63,93 @@ void RunLogic(void)
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
     
-    objPosArrayList* snakeBody = myPlayer->getPlayerPosList();
+    // objPos playerHead = myPlayer->getPlayerPos();
+    // objPos foodPos = myGM->getFoodPos(); // Check for food consumption
+    
     objPos playerHead =  myPlayer->getPlayerPosList()->getHeadElement();
-    objPos foodPos = myGM->getFoodPos(); // Check for food consumption
+    // if (myPlayer->checkFoodConsumption() == true){
+    //     myPlayer -> increasePlayerLength();
+    //     myGM->incrementScore();
+    //     myFood->generateFood(playerHead);
+    // }
 
-    if (myPlayer->checkFoodConsumption() == true){
-        myPlayer -> increasePlayerLength();
-        myGM->incrementScore();
-        myGM->generateFood(playerHead);
+    if (myPlayer->checkSelfCollision() == true) {
+        MacUILib_printf("Game Over! The snake collided with itself.\n");
     }
+        objPosArrayList* snakeBody = myPlayer->getPlayerPosList();
+        //objPos playerHead = snakeBody->getHeadElement(); // Access the head element
+
+        objPos foodPos = myFood->getFoodPos(); // Get the food position
+
+        // Check if the player eats the food
+    if (playerHead.pos->x == foodPos.pos->x && playerHead.pos->y == foodPos.pos->y) {
+        if (foodPos.symbol == 'S'){
+            myGM->specialIncrement(10);
+            snakeBody->removeTail(5);
+        }
+        else{
+            myGM->incrementScore();
+            // Extend the snake body: Do not remove the tail in movePlayer()
+            snakeBody->insertHead(playerHead); // Head already updated
+            }
+        myFood->generateFood(playerHead); // Generate new food at a random position
+    }
+
+    // if (myPlayer->checkFoodConsumption() == true) {
+    //     if (foodPos.symbol == 'S'){
+    //         myGM->specialIncrement(10);
+    //         snakeBody->removeTail(5);
+    //     }
+    //     else{
+    //         myGM->incrementScore();
+    //         // Extend the snake body: Do not remove the tail in movePlayer()
+    //         snakeBody->insertHead(playerHead); // Head already updated
+    //         }
+    //     myFood->generateFood(playerHead); // Generate new food at a random position
+    // }
+    //}
 }
 
-void DrawScreen(void)
-{
+void DrawScreen(void) {
     MacUILib_clearScreen();
+    objPosArrayList* snakeBody = myPlayer->getPlayerPosList(); // Access the snake body
+    objPos foodPos = myFood->getFoodPos();
 
-    objPosArrayList* snakeBody = myPlayer->getPlayerPosList(); 
-    objPos foodPos = myGM->getFoodPos();
-    
-    
-    
-    //  1. clear the current screen contents
-    //WILL NEED TP IMPLEMENT YOUR COPY ASSIGNMENT OPERATOR
-    //TO MAKE THIS LINE WORK
-    //MacUILib_clearScreen();
-    //  2. Iterate through each character location on the game board
-    //     using the nested for-loop row-scanning setup.
-    int i; //==y
-    int j; //==x
-    int k;
-
-    for (i = 0; i < myGM -> getBoardSizeX(); i++){
-        for (j = 0; j < myGM -> getBoardSizeY(); j++){
-            if (i == 0 || j == 0 || i == myGM -> getBoardSizeX() -1 || j ==  myGM -> getBoardSizeY()-1){
-                MacUILib_printf("#"); // Border symbol
-            }
-            else {
-                bool snake = false;
+    for (int i = 0; i < myGM->getBoardSizeX(); i++) {
+        for (int j = 0; j < myGM->getBoardSizeY(); j++) {
+            if (i == 0 || j == 0 || i == myGM->getBoardSizeX() - 1 || j == myGM->getBoardSizeY() - 1) {
+                MacUILib_printf("#"); // Draw border
+            } else {
+                bool isSnake = false;
                 for (int k = 0; k < snakeBody->getSize(); k++) {
                     objPos segment = snakeBody->getElement(k);
                     if (i == segment.pos->x && j == segment.pos->y) {
-                        MacUILib_printf("%c", segment.symbol); // display snake 
-                        snake = true;
+                        MacUILib_printf("%c", segment.symbol); // Draw snake segment
+                        isSnake = true;
                         break;
                     }
                 }
-                if (!snake) {
+                if (!isSnake) {
                     if (i == foodPos.pos->x && j == foodPos.pos->y) {
-                        MacUILib_printf("%c", foodPos.symbol); // display food
+                        MacUILib_printf("%c", foodPos.symbol); // Draw food
                     } else {
-                        MacUILib_printf(" "); 
+                        MacUILib_printf(" "); // Empty space
                     }
                 }
             }
         }
         MacUILib_printf("\n");
     }
-    MacUILib_printf("\n"); // new line after each row
-    MacUILib_printf("Score: %d\n", myGM->getScore()); 
-    MacUILib_printf("Food [x,y,sym] = [%d,%d,%c]\n", foodPos.pos->x, foodPos.pos->y, foodPos.symbol);     
+    MacUILib_printf("\n"); // Move to the next line after each row
+    MacUILib_printf("Score: %d\n", myGM->getScore());
+    //MacUILib_printf("Player [x,y,sym] = [%d,%d,%c]\n", playerPos.pos->x, playerPos.pos->y,playerPos.symbol);  
+    MacUILib_printf("Food [x,y,sym] = [%d,%d,%c]\n", foodPos.pos->x, foodPos.pos->y, foodPos.symbol); 
+    MacUILib_printf("Snake length: %d\n", snakeBody->getSize());
+    MacUILib_printf("Eat a 'S' to:\no Increase the score by 10 \no Decrease the snake length by 5");
+    
 }
+
+
 
 void LoopDelay(void)
 {
@@ -132,10 +161,12 @@ void CleanUp(void)
 {
     //MacUILib_clearScreen();  
     if (myPlayer->checkSelfCollision() == true) {
-        MacUILib_printf("Game Over! The snake collided with itself.\n");
+        MacUILib_printf("\nGame Over! The snake collided with itself.\n");
     }
+
     delete myPlayer;  
     delete myGM;
+    delete myFood;
 
     MacUILib_uninit();
 }

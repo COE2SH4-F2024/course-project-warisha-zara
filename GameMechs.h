@@ -42,6 +42,7 @@ class GameMechs
         
         int getScore() const;
         void incrementScore();
+        void specialIncrement(int increase);
         
         // More methods should be added here
         void generateFood(objPos blockOff);
