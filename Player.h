@@ -26,7 +26,9 @@ class Player
         void movePlayer();
 
         // More methods to be added here
-        //objPosArrayList* snakeBody;
+        bool checkSelfCollision() const;
+        bool checkFoodConsumption();
+        void increasePlayerLength();
 
     private:
         objPosArrayList* playerPosList;

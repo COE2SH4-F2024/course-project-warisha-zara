@@ -69,9 +69,16 @@ void RunLogic(void)
     myPlayer->movePlayer();
     
     objPosArrayList* snakeBody = myPlayer->getPlayerPosList();
-    objPos playerHead = snakeBody->getHeadElement();
-    //objPos playerHead = myPlayer->getPlayerPos();
+    objPos playerHead =  myPlayer->getPlayerPosList()->getHeadElement();
     objPos foodPos = myGM->getFoodPos(); // Check for food consumption
+
+    if (myPlayer->checkFoodConsumption() == true){
+        myPlayer -> increasePlayerLength();
+        myGM->incrementScore();
+        myGM->generateFood(playerHead);
+    }
+    //objPos playerHead = myPlayer->getPlayerPos();
+    
     
     //use to check is snake eats food
     if (playerHead.pos->x == foodPos.pos->x && playerHead.pos->y == foodPos.pos->y) {
@@ -150,6 +157,9 @@ void DrawScreen(void)
     // }
     // MacUILib_printf("\n"); //Move to next line after printed each row
     // MacUILib_printf("Player [x,y,sym] = [%d,%d,%c]\n", playerPos.pos->x, playerPos.pos->y,playerPos.symbol);    
+    if (myPlayer->checkSelfCollision() == true) {
+        MacUILib_printf("Game Over! The snake collided with itself.\n");
+    }
 }
 
 void LoopDelay(void)

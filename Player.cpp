@@ -187,6 +187,57 @@ void Player::movePlayer()
     playerPosList->insertHead(newHead);
     playerPosList->removeTail();
     
+    if (checkSelfCollision()) {
+        mainGameMechsRef->setLoseFlag(); 
+        mainGameMechsRef->setExitTrue(); 
+    }
 }
 
 // More methods to be added
+bool Player::checkFoodConsumption(){
+    //objPos currentHead = playerPosList->getHeadElement();
+    //Player *myPlayer;
+    //GameMechs *myGM;
+    //myGM = new GameMechs();
+    //myPlayer = new Player(myGM);
+    //cout << "check food consumption called";
+    //objPosArrayList* snakeBody = getPlayerPosList();
+    objPos playerHead = getPlayerPosList()->getHeadElement();
+    objPos foodPos = mainGameMechsRef->getFoodPos();
+ 
+    if (playerHead.pos->x == foodPos.pos->x && playerHead.pos->y == foodPos.pos->y) {
+        //myGM->incrementScore();
+        //myGM->generateFood(playerHead); // generate food randomly
+        // increase snake length
+        //snakeBody->insertHead(playerHead); // update head
+        return true;
+    }
+    else {
+        return false;
+    }
+   
+}
+ 
+void Player::increasePlayerLength(){
+    //Player *myPlayer;
+    //objPosArrayList* snakeBody = getPlayerPosList();
+    objPos playerHead = getPlayerPosList()->getHeadElement();
+    //cout << "check increase player length called";
+   
+    getPlayerPosList()->insertHead(playerHead); // update head
+ 
+}
+
+bool Player::checkSelfCollision() const {
+    objPos head = playerPosList->getHeadElement(); // get head of the snake
+
+    for (int i = 1; i < playerPosList->getSize(); i++) {
+        objPos bodySegment = playerPosList->getElement(i);
+
+        // check if the head position matches any body segment
+        if (head.pos->x == bodySegment.pos->x && head.pos->y == bodySegment.pos->y) {
+            return true; 
+        }
+    }
+    return false; 
+}
