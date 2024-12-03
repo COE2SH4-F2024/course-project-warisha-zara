@@ -12,7 +12,6 @@ Food::Food()
     exitFlag = false;
     loseFlag = false;
     score = 0;
-    //const char Str [] = "oooSooSoo"; //1-9
     boardSizeX = 10; //15
     boardSizeY = 20; //30
     food.setObjPos(5,5,'o');
@@ -24,40 +23,26 @@ Food::~Food()
 
 void Food::generateFood(objPos blockOff)
 {
-    //only need to block off the player pos for now
-    // ppa3 generate Items code
-         
-    //     // Check against snake's body
-    //     for (int i = 0; i < size; i++) {
-    //         objPos snake = blockOff->getElement(i);
-    //         if (snake.pos->x == x && snake.pos->y == y) {
-    //             unique = 0; // Not unique
-    //             break;
-    //         }
-    //     }
-
-    //srand(time(NULL));
-    int symbolIndex;
-    const char Str [] = "SooSooSoo"; //1-9
+    int symbolIndex; // index for selecting food
+    const char Str [] = "SooSooSoo"; //array of food, S is special food (bonus)
 
     bool unique = false;
-    //static bool unique = false;
     if (!unique) {
-        srand((time(nullptr)));
-        unique = true;
+        srand((time(nullptr))); //random 
+        unique = true; // set unique to true
     }
 
-    int foodX, foodY;
-    bool validPosition;
+    int foodX, foodY; // new food coordinates
+    bool validPosition; // to check no food overlap with position
 
     do {
-        foodX = rand() % (boardSizeX - 3) + 1;
+        foodX = rand() % (boardSizeX - 3) + 1; // random x value that is on game board
         foodY = rand() % (boardSizeY - 3) + 1;
-        symbolIndex = (rand() % 9);
-        validPosition = !(foodX == blockOff.pos->x && foodY == blockOff.pos->y);
+        symbolIndex = (rand() % 9); // randomly select number from the string
+        validPosition = !(foodX == blockOff.pos->x && foodY == blockOff.pos->y); // no overlap
     } while (!validPosition);
 
-    food.setObjPos(foodX, foodY, Str[symbolIndex]);
+    food.setObjPos(foodX, foodY, Str[symbolIndex]); // food position
 }
 
 objPos Food::getFoodPos() const

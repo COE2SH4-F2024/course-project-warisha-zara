@@ -46,8 +46,8 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-    // placed object in heap, go delete it in cleanup
 
+    // placed object in heap, delete it in cleanup
     myGM = new GameMechs();
     myPlayer = new Player(myGM); 
     myFood = new Food();
@@ -60,18 +60,19 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    myPlayer->updatePlayerDir();
-    myPlayer->movePlayer();
+    myPlayer->updatePlayerDir(); // update player dir based on input
+    myPlayer->movePlayer(); // move player to new position
     
-    objPos playerHead =  myPlayer->getPlayerPosList()->getHeadElement(); //acess the head element
+    // get positions for head, body, food
+    objPos playerHead =  myPlayer->getPlayerPosList()->getHeadElement();
     objPosArrayList* snakeBody = myPlayer->getPlayerPosList();
     objPos foodPos = myFood->getFoodPos(); // Get the food position
-
+    
+    // check if snake collides with self
     if (myPlayer->checkSelfCollision() == true) {
         MacUILib_printf("Game Over! The snake collided with itself.\n");
     }
         
-
     // Check if the player eats the food
     if (playerHead.pos->x == foodPos.pos->x && playerHead.pos->y == foodPos.pos->y) {
         if (foodPos.symbol == 'S'){
@@ -118,7 +119,7 @@ void DrawScreen(void) {
         MacUILib_printf("\n");
     }
     MacUILib_printf("\n"); // Move to the next line after each row
-    MacUILib_printf("Score: %d\n", myGM->getScore());
+    MacUILib_printf("Score: %d\n", myGM->getScore());  
     MacUILib_printf("Food [x,y,sym] = [%d,%d,%c]\n", foodPos.pos->x, foodPos.pos->y, foodPos.symbol); 
     MacUILib_printf("Snake length: %d\n", snakeBody->getSize());
     MacUILib_printf("Eat a 'S' to:\no Increase the score by 10 \no Decrease the snake length by 5");
