@@ -63,25 +63,16 @@ void RunLogic(void)
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
     
-    // objPos playerHead = myPlayer->getPlayerPos();
-    // objPos foodPos = myGM->getFoodPos(); // Check for food consumption
-    
-    objPos playerHead =  myPlayer->getPlayerPosList()->getHeadElement();
-    // if (myPlayer->checkFoodConsumption() == true){
-    //     myPlayer -> increasePlayerLength();
-    //     myGM->incrementScore();
-    //     myFood->generateFood(playerHead);
-    // }
+    objPos playerHead =  myPlayer->getPlayerPosList()->getHeadElement(); //acess the head element
+    objPosArrayList* snakeBody = myPlayer->getPlayerPosList();
+    objPos foodPos = myFood->getFoodPos(); // Get the food position
 
     if (myPlayer->checkSelfCollision() == true) {
         MacUILib_printf("Game Over! The snake collided with itself.\n");
     }
-        objPosArrayList* snakeBody = myPlayer->getPlayerPosList();
-        //objPos playerHead = snakeBody->getHeadElement(); // Access the head element
+        
 
-        objPos foodPos = myFood->getFoodPos(); // Get the food position
-
-        // Check if the player eats the food
+    // Check if the player eats the food
     if (playerHead.pos->x == foodPos.pos->x && playerHead.pos->y == foodPos.pos->y) {
         if (foodPos.symbol == 'S'){
             myGM->specialIncrement(10);
@@ -94,20 +85,6 @@ void RunLogic(void)
             }
         myFood->generateFood(playerHead); // Generate new food at a random position
     }
-
-    // if (myPlayer->checkFoodConsumption() == true) {
-    //     if (foodPos.symbol == 'S'){
-    //         myGM->specialIncrement(10);
-    //         snakeBody->removeTail(5);
-    //     }
-    //     else{
-    //         myGM->incrementScore();
-    //         // Extend the snake body: Do not remove the tail in movePlayer()
-    //         snakeBody->insertHead(playerHead); // Head already updated
-    //         }
-    //     myFood->generateFood(playerHead); // Generate new food at a random position
-    // }
-    //}
 }
 
 void DrawScreen(void) {
@@ -142,7 +119,6 @@ void DrawScreen(void) {
     }
     MacUILib_printf("\n"); // Move to the next line after each row
     MacUILib_printf("Score: %d\n", myGM->getScore());
-    //MacUILib_printf("Player [x,y,sym] = [%d,%d,%c]\n", playerPos.pos->x, playerPos.pos->y,playerPos.symbol);  
     MacUILib_printf("Food [x,y,sym] = [%d,%d,%c]\n", foodPos.pos->x, foodPos.pos->y, foodPos.symbol); 
     MacUILib_printf("Snake length: %d\n", snakeBody->getSize());
     MacUILib_printf("Eat a 'S' to:\no Increase the score by 10 \no Decrease the snake length by 5");

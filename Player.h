@@ -21,19 +21,17 @@ class Player
         Player(GameMechs* thisGMRef);
         ~Player();
         objPosArrayList* getPlayerPosList() const; 
-        //objPos getPlayerPos() const; // Upgrade this in iteration 3.       
+        //was objPos getPlayerPos() const; but upgraded for I3.      
         void updatePlayerDir();
         void movePlayer();
+
+        // More methods to be added here
         bool checkSelfCollision() const;
         bool checkFoodConsumption();
         void increasePlayerLength();
 
-        // More methods to be added here
-        //objPosArrayList* snakeBody;
-
     private:
-        objPosArrayList* playerPosList;
-        //objPos playerPos; // Upgrade this in iteration 3.       
+        objPosArrayList* playerPosList; //was objPos playerPos; but upgraded for I3.       
         enum Dir playerDir;//does this have to be named as myDir?
 
         // Need a reference to the Main Game Mechanisms
