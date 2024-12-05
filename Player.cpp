@@ -106,6 +106,7 @@ void Player::movePlayer() {
     playerPosList->insertHead(newHead);
     playerPosList->removeTail();
 
+    // exit if snake collides with self
     if (checkSelfCollision()) {
         mainGameMechsRef->setLoseFlag(); 
         mainGameMechsRef->setExitTrue(); 
